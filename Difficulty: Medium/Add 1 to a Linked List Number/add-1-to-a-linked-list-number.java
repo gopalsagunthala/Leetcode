@@ -56,42 +56,26 @@ class Node{
 
 class Solution {
     public Node addOne(Node head) {
-        head = reverse(head);
-        Node temp = head;
-        int carry = 1;
-        while(temp != null){
-            temp.data = carry+temp.data;
-            
-            if(temp.data < 10 ){
-                carry = 0;
-                break;
-            }
-            else{
-                temp.data = 0;
-            }
-            temp = temp.next;
-        }
+        int carry = help(head);
+        
         if(carry == 1){
-            Node tempp = new Node(1);
-            tempp.next = head;
-            return tempp;
+            Node New = new Node(1);
+            New.next =  head;
+            return New;
         }
-        
-            head = reverse(head);
-            return head;
-        
+        return head;
     }
-    public static Node reverse(Node head){
-        Node temp = head;
-        Node prev = null;
-        Node front;
-        while(temp != null){
-            front = temp.next;
-            temp.next = prev;
-            prev = temp;
-            temp = front;
-            
+    public static int help(Node temp){
+        if(temp == null){
+            return 1;
         }
-        return prev;
+        int carry = help(temp.next);
+        temp.data = temp.data+carry;
+        if(temp.data < 10){
+            return 0;
+        }
+        temp.data = 0;
+        return 1;
+        
     }
 }
